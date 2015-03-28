@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+import requests, json, sys
+
+user = sys.argv[1]	
+
+# User Key: engineer
+eng_key = {'X-Cloupia-Request-Key' : 'B38732812DEC4DE1A8F747554D65AEAC'}
+eng_vdc = "Engineering"
+
+# User Key: humanities
+human_key = {'X-Cloupia-Request-Key' : 'C556BCDA1AEA4849B3373FF6C025E97F'}
+human_vdc = "Humanities"
+
+# User Key: nurse
+nurse_key = {'X-Cloupia-Request-Key' : ''}
+nurse_vdc = "Nurse"
+
+# Future
+#  nurse_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequest&opData={param0:"UbuntuDesktop",param1:"Humanities",param2:"1",param3:1.0,param4:1.0,param5:"Test - Please delete any time you need to."}'
+
+
+
+if (user == "Engineering") :
+	#print "It's a ENGINEER!"
+	# Custom request
+	# eng_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequestCustom&opData={param0:"UbuntuDesktop",param1:"Engineering",param2:"engineering1",param3:1.0,param4:1024.0,param5:1000,param6:1000,param7:1,param8:"Test - Please delete any time you need to."}'
+
+	eng_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequestCustom&opData={param0:"UbuntuDesktop",param1:"' + sys.argv[1] + '",param2:"' + sys.argv[2] + '",param3:' + sys.argv[3] + ',param4:' + sys.argv[4] + ',param5:' + sys.argv[5] + ',param6:1,param7:1,param8:"Test - Please delete any time you need to."}'
+
+	r = requests.post(eng_url, headers=eng_key)
+
+
+if (user == "Humanities") :
+	#print "It's a HUMAN!"
+	# Standard request
+	human_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequest&opData={param0:"Desktop-$20/month",param1:"' + sys.argv[1] + '",param2:1,param3:1.0,param4:1.0,param5:"Test - Please delete any time."}'
+	r = requests.post(human_url, headers=human_key)
+
+json_text = r.text
+decoded = json.loads(json_text)
+
+#print "<p>"
+#print json.dumps(decoded, sort_keys=True, indent=4)
+print "<p>"
+print "Your service request number is: ", decoded['serviceResult']
+print "<p>You should recieve and e-mail with login instructions when your server is ready."

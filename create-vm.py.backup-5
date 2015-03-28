@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+import requests, json, sys
+
+if (len(sys.argv) < 8):
+	print "Incorect usage: %s catalog/OS vdc servername vcpu memory timetolive pcloud/aws" %(sys.argv[0])
+	sys.exit()
+
+catalog = sys.argv[1]
+user = sys.argv[2]
+datacenter = sys.argv[7]
+
+if (catalog == "windows"):
+	catalog_name = "asu_%s_windows" %(datacenter)
+elif (catalog == "linux"):
+	catalog_name = "asu_%s_ubuntu" %(datacenter)
+
+# User Key: engineer
+eng_key = {'X-Cloupia-Request-Key' : 'EBBA1F568A4747D8AC011440087515BE'}
+eng_vdc = "Engineering"
+
+# User Key: humanities
+human_key = {'X-Cloupia-Request-Key' : 'C556BCDA1AEA4849B3373FF6C025E97F'}
+human_vdc = "Humanities"
+
+# User Key: nurse
+nurse_key = {'X-Cloupia-Request-Key' : ''}
+nurse_vdc = "Nurse"
+
+# Future
+#  nurse_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequest&opData={param0:"UbuntuDesktop",param1:"Humanities",param2:"1",param3:1.0,param4:1.0,param5:"Test - Please delete any time you need to."}'
+
+
+
+if (user == "Engineering") :
+	main_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequestCustom&opData={'
+	main_url += 'param0:"%s",' %(catalog_name)
+	for option in range(1,6):
+		main_url += 'param%s:"%s",' %(option, sys.argv[option+1])
+	main_url += 'param6:"1",param7:"1",param8:"Test - Please delete any time you need to."}'
+	security_key = eng_key
+
+	# http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequestCustom&opData={param0:"asu_pcloud_ubuntu",param1:"Engineering",param2:"sample",param3:1000.0,param4:1000.0,param5:1000,param6:1000,param7:1000,param8:"sample"}
+	# print main_url
+
+
+if (user == "Humanities") :
+	#print "It's a HUMAN!"
+	# Standard request
+	main_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPISubmitServiceRequest&opData={param0:"Desktop-$20/month",param1:"' + sys.argv[2] + '",param2:1,param3:1.0,param4:1.0,param5:"Test - Please delete any time."}'
+	security_key = human_key
+
+try:
+	# print main_url
+	result = requests.post(main_url, headers=security_key)
+	json_text = result.text
+	decoded_json = json.loads(json_text)
+
+	print "<p>"
+	print "Your service request number is: ", decoded_json['serviceResult']
+	print "<p>You should recieve and e-mail with login instructions when your server is ready."
+
+except (ValueError, KeyError, TypeError):
+	print "<p>I'm sorry, there was an error."

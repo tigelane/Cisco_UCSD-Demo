@@ -1,0 +1,54 @@
+{
+  "user":
+	[
+		{
+		"tige":"01",
+		"scheme":
+			{
+				"background": "asu_tige_back.jpg",
+				"text": "#888888"
+			},
+		"actions":
+			{
+				"id": "action1",
+				"id": "action3"
+			}
+		},
+		{
+			"name":"bob",
+		"scheme":
+			{
+				"background": "asu_bob_back.jpg",
+				"text": "#222222"
+			},
+		"actions":
+			{
+				"id": "action4",
+				"id": "action5"
+			}
+		}
+	],
+  "actions":
+  		{
+  			"action1": "some_action",
+  			"action2": "another_action",
+  			"action3": "another_action_3",
+  			"action4": "another_action_4",
+  			"action5": "another_action_5"
+  		},
+  "base_colors":
+  		{
+  		"background": "#FFFFFF",
+  		"text": "#888888"
+  		},
+  "parameters":
+  		{
+  		"id":"a_param_id"
+  		},
+  		
+  "tige" : 
+	{
+	"background": "asu_tige_back.jpg",
+	"text": "#888888"
+	}
+}

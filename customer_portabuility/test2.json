@@ -1,0 +1,44 @@
+{
+  "users":
+    {
+		"engineering":	{
+			"password": "cisco123",
+			"top_picture": "eng_back.jpg",
+			"background_picture": "eng_back.jpg",
+			"background_color": "#FFFFFF",
+			"text_color": "#888888",
+			"security_key": "",
+			"actions": 
+				[
+				"create_vm",
+				"collect_catalog",
+				"select_user"
+				]
+			},
+		"nurse":	{
+			"password": "cisco123",
+			"top_picture": "nurse_back.jpg",
+			"background_picture": "nurse_back.jpg",
+			"background_color": "#222222",
+			"text_color": "#AAAAAA",
+			"security_key": "",
+			"actions": 
+				[
+				"create_vm",
+				"collect_catalog",
+				"check_billing"
+				]
+			},
+		"system":	{
+			"top_picture": "asu_back.jpg",
+			"background_picture": "asu_back.jpg",
+			"background_color": "#777777",
+			"text_color": "#FFFFFF",
+			"security_key": "",
+			"actions": 
+				[
+				"login"
+				]
+			}
+    }
+}

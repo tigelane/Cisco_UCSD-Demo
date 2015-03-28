@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+import requests, json, sys
+
+security_key = vdc = eng_key = human_key = nurse_key = decoded_json = ""
+
+def check_usage():
+	if (len(sys.argv) < 3):
+		print "Incorect usage: %s group action[GetRequests, GetCatalogs] (option)" %(sys.argv[0])
+		sys.exit()
+
+def user_setup():
+	global security_key, vdc
+	
+	# Setup the security key
+	if (group == "UofA-Engineering") :
+		security_key = {'X-Cloupia-Request-Key' : 'EBBA1F568A4747D8AC011440087515BE'}
+		vdc = "Engineering"
+	elif (group == "UofA-Humanities") :
+		security_key = {'X-Cloupia-Request-Key' : 'C556BCDA1AEA4849B3373FF6C025E97F'}
+		vdc = "Humanities"
+	elif (group == "Nursing") :
+		security_key = nurse_key
+		vdc = "Nurse"
+	elif (group == "PHX-DCV-LAB") :
+		security_key = {'X-Cloupia-Request-Key' : 'C556BCDA1AEA4849B3373FF6C025E97F'}
+		vdc = "PHX-DCV-LAB"
+	else:
+		show_error("Request Error", "Invalid group name")
+
+def show_error(error_title,error_message):
+	print "<P>"
+	print '<TABLE  align="center" bgcolor="#FFFFFF" border="2" BORDERCOLOR="#990033">'
+	print "<TR><TH>"
+	print error_title
+	print '<TD> <font color="#990033">'
+	print '<TR align="center" ><TD>'
+	print error_message
+	sys.exit()
+
+check_usage()
+group = sys.argv[1]
+action = sys.argv[2]
+user_setup()
+
+
+# Execute the proper action item
+if (action == "GetRequests"):
+	main_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPIGetServiceRequests&opData={}'
+elif (action == "GetCatalogs"):
+	main_url = 'http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com/app/api/rest?formatType=json&opName=userAPIGetCatalogsPerGroup&opData={'
+	main_url += 'param0:"%s"' %(group)
+	main_url += '}'
+
+try:
+	print security_key
+	print main_url
+	result = requests.post(main_url, headers=security_key)
+	json_text = result.text
+	decoded_json = json.loads(json_text)
+
+	print "<P>"
+	print '<TABLE  align="center" bgcolor="#FFFFFF" border="2" BORDERCOLOR="#990033"> <TR><TH>Action Sucessfull'
+	print '<TR align="center"> <TD> <font color="#990033">'
+	print "Catalog Item"
+	print '<TR align="center" > <TD> <font color="#990033">'
+	
+	print "\n\nText results:\n" 
+	print decoded_json['serviceResult']
+	print "\n\n"
+
+
+except (ValueError, KeyError, TypeError):
+	print "<P>"
+	print '<TABLE  align="center" bgcolor="#FFFFFF" border="2" BORDERCOLOR="#990033"> <TR><TH>Service Request Error'
+	print '<TD> <font color="#990033">'
+	print '<TR align="center" ><TD>'
+	print "I'm sorry, there was an error."

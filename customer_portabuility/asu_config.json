@@ -1,0 +1,90 @@
+{
+  "users":
+    {
+		"service_desk":	{
+			"password": "cisco123",
+			"top_picture": "service_back.jpg",
+			"background_picture": "service_back.jpg",
+			"background_color": "#FFFFFF",
+			"text_color": "#888888",
+			"security_key": "",
+			"actions": 
+				[
+				"create_vdi",
+				"create_vm",
+				"view_catalog",
+				"select_user",
+				"service_requests",
+				"check_costs",
+				"view_current_servers",
+				"check_costs_foruser",
+				"create_vm_foruser",
+				"create_vdi_foruser",
+				"view_current_servers_foruser"
+				]
+			},
+		"it":	{
+			"password": "cisco123",
+			"top_picture": "it_back.jpg",
+			"background_picture": "it_back.jpg",
+			"background_color": "#FFFFFF",
+			"text_color": "#888888",
+			"security_key": "",
+			"actions": 
+				[
+				"create_vdi",
+				"create_vm",
+				"view_catalog",
+				"select_user",
+				"service_requests",
+				"check_costs",
+				"view_current_servers"
+				]
+			},
+		"engineering":	{
+			"password": "cisco123",
+			"top_picture": "eng_back.jpg",
+			"background_picture": "eng_back.jpg",
+			"background_color": "#FFFFFF",
+			"text_color": "#888888",
+			"security_key": "",
+			"actions": 
+				[
+				"create_vdi",
+				"create_vm",
+				"view_catalog",
+				"select_user",
+				"service_requests",
+				"check_costs",
+				"view_current_servers"
+				]
+			},
+		"nurse":	{
+			"password": "cisco123",
+			"top_picture": "nurse_back.jpg",
+			"background_picture": "nurse_back.jpg",
+			"background_color": "#222222",
+			"text_color": "#AAAAAA",
+			"security_key": "",
+			"actions": 
+				[
+				"create_vdi",
+				"collect_catalog",
+				"check_costs",
+				"view_current_servers"
+				]
+			},
+		"system":	{
+			"top_picture": "asu_back.jpg",
+			"background_picture": "asu_back.jpg",
+			"background_color": "#777777",
+			"text_color": "#FFFFFF",
+			"security_key": "",
+			"ucsd_server": "http://phx2-lab-dcv-ucs-cloupiajtrii.cisco.com",
+			"actions": 
+				[
+				"login"
+				]
+			}
+    }
+}
